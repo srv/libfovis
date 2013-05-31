@@ -1,27 +1,44 @@
-cmake_minimum_required(VERSION 2.6.0)
+cmake_minimum_required(VERSION 2.8.3)
+project(libfovis)
 
-# pull in the pods macros. See cmake/pods.cmake for documentation
-set(POD_NAME libfovis)
-include(cmake/pods.cmake)
+find_package(catkin REQUIRED)
 
-# require pkg-config to build.  We use pkg-config to search for both
-# required and optional dependencies (Eigen, LCM, libbot2, etc.)
-find_package(PkgConfig REQUIRED)
+find_package(Eigen REQUIRED)
+include_directories(${EIGEN_INCLUDE_DIRS})
+add_definitions(${EIGEN_DEFINITIONS})
 
-pkg_check_modules(EIGEN REQUIRED eigen3)
+catkin_package(
+  INCLUDE_DIRS libfovis
+  LIBRARIES fovis
+)
 
-# build the main library
-add_subdirectory(libfovis)
+add_definitions(-Wall -msse2 -msse3)
 
-add_subdirectory(testers)
-add_subdirectory(examples)
+include_directories(libfovis
+  ${catkin_INCLUDE_DIRS}
+)
 
-message("
+add_library(fovis
+    libfovis/frame.cpp
+    libfovis/visual_odometry.cpp
+    libfovis/fast.cpp
+    libfovis/motion_estimation.cpp
+    libfovis/gauss_pyramid.c
+    libfovis/refine_motion_estimate.cpp
+    libfovis/tictoc.cpp
+    libfovis/primesense_depth.cpp
+    libfovis/initial_homography_estimation.cpp
+    libfovis/grid_filter.cpp
+    libfovis/intensity_descriptor.cpp
+    libfovis/pyramid_level.cpp
+    libfovis/feature_matcher.cpp
+    libfovis/refine_feature_match.cpp
+    libfovis/stereo_depth.cpp
+    libfovis/stereo_frame.cpp
+    libfovis/depth_image.cpp
+    libfovis/rectification.cpp
+    libfovis/stereo_rectify.cpp
+    libfovis/internal_utils.cpp
+    libfovis/normalize_image.cpp)
 
-Configuration (fovis):
-
-       libfovis:        Enabled
- OpenNI example:        ${OPENNI_EXAMPLE_MESSAGE}
- libfreenct example:    ${LIBFREENECT_EXAMPLE_MESSAGE}
-
-")
+set_target_properties(fovis PROPERTIES SOVERSION 1)
