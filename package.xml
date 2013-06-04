@@ -12,7 +12,10 @@
   <author>Albert Huang</author>
   <author>Maurice Fallon</author>
 
+  <run_depend>catkin</run_depend>
   <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>eigen</build_depend>
+  <run_depend>eigen</run_depend>
 
   <export>
     <cpp lflags="-L${prefix}/lib -Wl,-rpath,${prefix}/lib -libfovis" cflags="-msse3 -I${prefix}/libfovis/libfovis/"/>
