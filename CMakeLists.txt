@@ -9,7 +9,7 @@ add_definitions(${EIGEN_DEFINITIONS})
 
 catkin_package(
   INCLUDE_DIRS libfovis
-  LIBRARIES fovis
+  LIBRARIES libfovis
 )
 
 add_definitions(-Wall -msse2 -msse3)
@@ -18,7 +18,7 @@ include_directories(libfovis
   ${catkin_INCLUDE_DIRS}
 )
 
-add_library(fovis
+add_library(libfovis
     libfovis/frame.cpp
     libfovis/visual_odometry.cpp
     libfovis/fast.cpp
@@ -41,4 +41,4 @@ add_library(fovis
     libfovis/internal_utils.cpp
     libfovis/normalize_image.cpp)
 
-set_target_properties(fovis PROPERTIES SOVERSION 1)
+set_target_properties(libfovis PROPERTIES SOVERSION 1)
