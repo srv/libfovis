@@ -13,7 +13,7 @@ catkin_package(
 )
 
 add_definitions(-Wall -O3 -march=native)
-
+#add_definitions( -DUSE_FAST_SETTINGS )
 include_directories(libfovis
   ${catkin_INCLUDE_DIRS}
 )

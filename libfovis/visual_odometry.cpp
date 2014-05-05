@@ -291,7 +291,6 @@ VisualOdometry::getDefaultOptions()
 {
   VisualOdometryOptions r;
   //TODO split defaults?
-
   // VisualOdometry, OdometryFrame
   r["feature-window-size"] = "9";
   r["max-pyramid-level"] = "3";
@@ -324,6 +323,14 @@ VisualOdometry::getDefaultOptions()
   r["stereo-max-dist-epipolar-line"] = "1.5";
   r["stereo-max-refinement-displacement"] = "1.0";
   r["stereo-max-disparity"] = "128";
+
+#if USE_FAST_SETTINGS
+  r["min-pyramid-level"] = "3";
+  r["target-pixels-per-feature"] = "500";
+  r["fast-threshold"] = "20";
+  r["max-keypoints-per-bucket"] = "3";
+  r["feature-search-window"] = "25";
+#endif
 
   return r;
 }
