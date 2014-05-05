@@ -12,7 +12,7 @@ catkin_package(
   LIBRARIES libfovis
 )
 
-add_definitions(-Wall -msse2 -msse3)
+add_definitions(-Wall -O3 -march=native)
 
 include_directories(libfovis
   ${catkin_INCLUDE_DIRS}
