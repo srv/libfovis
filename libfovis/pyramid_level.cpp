@@ -78,7 +78,7 @@ PyramidLevel::~PyramidLevel()
   free(_raw_gray);
   free(_descriptors);
   free(_pyrbuf);
-  free(_keypoints);
+  delete[] _keypoints;
   delete _descriptor_extractor;
   _raw_gray = NULL;
   _descriptors = NULL;
