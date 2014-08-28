@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(libfovis)
 
-find_package(catkin REQUIRED)
+find_package(catkin REQUIRED cmake_modules)
 
 find_package(Eigen REQUIRED)
 include_directories(${EIGEN_INCLUDE_DIRS})
@@ -18,7 +18,7 @@ include_directories(libfovis
   ${catkin_INCLUDE_DIRS}
 )
 
-add_library(libfovis
+add_library(fovis
     libfovis/frame.cpp
     libfovis/visual_odometry.cpp
     libfovis/fast.cpp
@@ -41,4 +41,4 @@ add_library(libfovis
     libfovis/internal_utils.cpp
     libfovis/normalize_image.cpp)
 
-set_target_properties(libfovis PROPERTIES SOVERSION 1)
+set_target_properties(fovis PROPERTIES SOVERSION 1)
