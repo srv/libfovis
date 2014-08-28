@@ -1,11 +1,7 @@
 #ifndef __fovis_sad_hpp__
 #define __fovis_sad_hpp__
 
-#ifndef USE_SSE
-#define USE_SSE
-#endif
-
-#ifdef USE_SSE
+#ifdef FOVIS_USE_SSE
 #include <emmintrin.h>
 #endif
 
@@ -31,7 +27,7 @@ public:
    * multiple of 16.
    */
   int32_t score(const uint8_t *ref_desc, const uint8_t *target_desc) {
-#ifdef USE_SSE
+#ifdef FOVIS_USE_SSE
     // compute sum of absolute differences (fast)
     const uint8_t * pp = ref_desc;
     const uint8_t * cp = target_desc;
@@ -49,7 +45,7 @@ public:
     int32_t score = _mm_cvtsi128_si32(f);
 #else
     int32_t score = 0;
-    for(int i=0; i<descriptor_len; i++) {
+    for(int i=0; i<_descriptor_len; i++) {
       score += abs(ref_desc[i] - target_desc[i]);
     }
 #endif

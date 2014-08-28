@@ -18,7 +18,6 @@ Requirements:
 
   CMake       (http://www.cmake.org)
   Eigen 3     (http://eigen.tuxfamily.org)
-  Intel SSE2
 
   Fovis was developed on Ubuntu, but may work with other platforms.
 
@@ -40,6 +39,17 @@ For system-wide installation:
 For use in the source directory:
 
   $ mkdir build
+  $ make
+
+
+Intel SSE
+---------
+  By default, Fovis is configured to use Intel SSE2 and SSE3 instructions.  You
+  can disable this option (e.g., if you're targeting a platform without those
+  instructions) by using the CMake option USE_SSE:
+
+  $ cd build
+  $ cmake .. -DUSE_SSE=OFF
   $ make
 
 

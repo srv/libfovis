@@ -20,10 +20,14 @@ Eigen::ArrayXf InitialHomographyEstimator::flattenMatrix(Eigen::MatrixXf &m)
   return Eigen::Map<Eigen::ArrayXf>(m.data(), m.rows() * m.cols());
 }
 
-static void 
+static void
 grayToEigen(const uint8_t * grayData, int width, int height, int stride,
     int downsampleFactor, Eigen::MatrixXf* result)
 {
+  // truncate the image before downsampling.
+  width = (width >> downsampleFactor) << downsampleFactor;
+  height = (height >> downsampleFactor) << downsampleFactor;
+
   Eigen::MatrixXf& eig_imf = *result;
   if (downsampleFactor > 0) {
     int cols = width >> downsampleFactor;
@@ -137,35 +141,9 @@ Eigen::Matrix3f InitialHomographyEstimator::track(const Eigen::Matrix3f & initH,
     Eigen::MatrixXf Jt = computeJacobian(templateDxRow + warpedTestImageDxRow, templateDyRow + warpedTestImageDyRow);
     tictoc("computeJacobian");
 
-    //compute the psuedo-inverse
+    //compute the pseudo-inverse
     tictoc("update");
-    tictoc("svd_pinv");
-    Eigen::JacobiSVD<MatrixXf> svd(Jt, ComputeThinU | ComputeThinV);
-    Eigen::VectorXf sigma = svd.singularValues();
-    Eigen::MatrixXf U = svd.matrixU();
-    Eigen::MatrixXf V = svd.matrixV();
-    int r = 0;
-    for (r = 0; r < sigma.rows(); r++) { //singular values are in decreasing order
-      if (sigma(r) < 1e-7) //TODO:better way to get the tolerance?
-        break;
-      else
-        sigma(r) = 1.0 / sigma(r);
-    }
-    Eigen::MatrixXf Jt_plus;
-    if (r == 0)
-      Jt_plus = Eigen::MatrixXf::Zero(Jt.cols(), Jt.rows());
-    else {
-      Jt_plus = V.block(0, 0, V.rows(), r) * sigma.head(r).asDiagonal() * U.block(0, 0, U.rows(), r).transpose();
-    }
-    tictoc("svd_pinv");
-
-    // this doesn't seem to work :-/
-    //    tictoc("manual_pinv");
-    //    Eigen::Matrix3f JtT_Jt = Jt.transpose() * Jt;
-    //    Eigen::MatrixXf Jt_plus = JtT_Jt.inverse() * Jt;
-    //    tictoc("manual_pinv");
-
-    Eigen::VectorXf lie_d = -2 * Jt_plus * errorRow;
+    Eigen::VectorXf lie_d = -2*(Jt.transpose() * Jt).ldlt().solve(Jt.transpose() * errorRow);
     tictoc("update");
 
     tictoc("lieToH");

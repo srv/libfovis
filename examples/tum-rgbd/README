@@ -1,0 +1,7 @@
+Example code for processing the TUM-RGBD dataset.
+
+    http://vision.in.tum.de/data/datasets/rgbd-dataset
+
+Compiles to fv-tum-rgbd
+
+Run with --help for documentation.

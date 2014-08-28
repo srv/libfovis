@@ -286,6 +286,13 @@ VisualOdometry::sanityCheck() const
   _estimator->sanityCheck();
 }
 
+static std::string _toString(double v)
+{
+  char buf[80];
+  snprintf(buf, sizeof(buf), "%f", v);
+  return std::string(buf);
+}
+
 VisualOdometryOptions
 VisualOdometry::getDefaultOptions()
 {
@@ -299,7 +306,7 @@ VisualOdometry::getDefaultOptions()
   r["target-pixels-per-feature"] = "250";
   r["fast-threshold"] = "20";
   r["use-adaptive-threshold"] = "true";
-  r["fast-threshold-adaptive-gain"] = "0.005";
+  r["fast-threshold-adaptive-gain"] = _toString(0.005);
   r["use-homography-initialization"] = "true";
   r["ref-frame-change-threshold"] = "150";
 
@@ -311,18 +318,18 @@ VisualOdometry::getDefaultOptions()
   r["use-image-normalization"] = "false";
 
   // MotionEstimator
-  r["inlier-max-reprojection-error"] = "1.5";
-  r["clique-inlier-threshold"] = "0.1";
+  r["inlier-max-reprojection-error"] = _toString(1.5);
+  r["clique-inlier-threshold"] = _toString(0.1);
   r["min-features-for-estimate"] = "10";
-  r["max-mean-reprojection-error"] = "10.0";
+  r["max-mean-reprojection-error"] = _toString(10.0);
   r["use-subpixel-refinement"] = "true";
   r["feature-search-window"] = "25";
   r["update-target-features-with-refined"] = "false";
 
   // StereoDepth
   r["stereo-require-mutual-match"] = "true";
-  r["stereo-max-dist-epipolar-line"] = "1.5";
-  r["stereo-max-refinement-displacement"] = "1.0";
+  r["stereo-max-dist-epipolar-line"] = _toString(1.5);
+  r["stereo-max-refinement-displacement"] = _toString(1.0);
   r["stereo-max-disparity"] = "128";
 
   return r;

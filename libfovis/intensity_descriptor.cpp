@@ -8,7 +8,7 @@
 #include <algorithm>
 #include <numeric>
 
-#ifdef USE_SSE
+#ifdef FOVIS_USE_SSE
 #include <emmintrin.h>
 #endif
 
@@ -113,8 +113,9 @@ IntensityDescriptorExtractor::normalizeDescriptor(uint8_t* desc) const
   assert(FOVIS_IS_ALIGNED16(_descriptor_brightness_offset));
 
   // get mean of patch
-  uint32_t desc_mean = std::accumulate(desc, desc + _descriptor_len, 0)/_descriptor_len;
+  int desc_mean = std::accumulate(desc, desc + _descriptor_len, 0)/_descriptor_len;
   // subtract mean, adding offset so 0 -> 128
+#ifdef FOVIS_USE_SSE
   if(desc_mean < 128) {
     std::fill(_descriptor_brightness_offset, _descriptor_brightness_offset+16, 128-desc_mean);
     for(int op=0; op<_brightess_offset_num_sse_ops; op++) {
@@ -128,6 +129,15 @@ IntensityDescriptorExtractor::normalizeDescriptor(uint8_t* desc) const
         *(__m128i*)_descriptor_brightness_offset);
     }
   }
+#else
+  if(desc_mean < 128) {
+    for(int i=0; i<_descriptor_len; i++)
+      desc[i] += std::min(255, desc_mean);
+  } else if (desc_mean > 128) {
+    for(int i=0; i<_descriptor_len; i++)
+      desc[i] += std::max(0, desc_mean);
+  }
+#endif
 }
 
 void

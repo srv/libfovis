@@ -6,6 +6,7 @@
 #include "primesense_depth.hpp"
 #include "stereo_depth.hpp"
 #include "depth_image.hpp"
+#include "stereo_disparity.hpp"
 
 /**
  * \defgroup FovisCore Fovis core

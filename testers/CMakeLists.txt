@@ -1,3 +1,7 @@
+if(NOT PKG_CONFIG_FOUND)
+    return()
+endif()
+
 add_executable(absolute-orientation-tester 
     absolute_orientation_horn_tester.cpp)
 pods_use_pkg_config_packages(absolute-orientation-tester 

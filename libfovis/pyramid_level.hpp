@@ -58,11 +58,11 @@ class PyramidLevel
       return _keypoints[i].xyzw;
     }
 
-    const float getKeypointRectBaseU(int kp_index) const {
+    float getKeypointRectBaseU(int kp_index) const {
       return _keypoints[kp_index].rect_base_uv(0);
     }
 
-    const float getKeypointRectBaseV(int kp_index) const {
+    float getKeypointRectBaseV(int kp_index) const {
       return _keypoints[kp_index].rect_base_uv(1);
     }
 

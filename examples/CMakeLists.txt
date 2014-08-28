@@ -29,3 +29,6 @@ else()
         add_subdirectory(fv-example-freenect)
     endif()
 endif()
+
+add_subdirectory(tum-rgbd)
+set(TUM_RGBD_MESSAGE "Enabled" PARENT_SCOPE)
