@@ -9,7 +9,7 @@ add_definitions(${EIGEN_DEFINITIONS})
 
 catkin_package(
   INCLUDE_DIRS libfovis
-  LIBRARIES libfovis
+  LIBRARIES fovis
 )
 
 add_definitions(-Wall -msse2 -msse3)
@@ -38,6 +38,7 @@ add_library(fovis
     libfovis/depth_image.cpp
     libfovis/rectification.cpp
     libfovis/stereo_rectify.cpp
+    libfovis/stereo_calibration.cpp
     libfovis/internal_utils.cpp
     libfovis/normalize_image.cpp)
 
