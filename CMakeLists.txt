@@ -8,37 +8,50 @@ include_directories(${EIGEN_INCLUDE_DIRS})
 add_definitions(${EIGEN_DEFINITIONS})
 
 catkin_package(
-  INCLUDE_DIRS libfovis
+  INCLUDE_DIRS include
   LIBRARIES libfovis
 )
 
 add_definitions(-Wall -msse2 -msse3)
 
-include_directories(libfovis
-  ${catkin_INCLUDE_DIRS}
+include_directories(
+    include
+    ${catkin_INCLUDE_DIRS}
 )
 
-add_library(libfovis
-    libfovis/frame.cpp
-    libfovis/visual_odometry.cpp
-    libfovis/fast.cpp
-    libfovis/motion_estimation.cpp
-    libfovis/gauss_pyramid.c
-    libfovis/refine_motion_estimate.cpp
-    libfovis/tictoc.cpp
-    libfovis/primesense_depth.cpp
-    libfovis/initial_homography_estimation.cpp
-    libfovis/grid_filter.cpp
-    libfovis/intensity_descriptor.cpp
-    libfovis/pyramid_level.cpp
-    libfovis/feature_matcher.cpp
-    libfovis/refine_feature_match.cpp
-    libfovis/stereo_depth.cpp
-    libfovis/stereo_frame.cpp
-    libfovis/depth_image.cpp
-    libfovis/rectification.cpp
-    libfovis/stereo_rectify.cpp
-    libfovis/internal_utils.cpp
-    libfovis/normalize_image.cpp)
+add_library(fovis
+    src/libfovis/frame.cpp
+    src/libfovis/visual_odometry.cpp
+    src/libfovis/fast.cpp
+    src/libfovis/motion_estimation.cpp
+    src/libfovis/gauss_pyramid.c
+    src/libfovis/refine_motion_estimate.cpp
+    src/libfovis/tictoc.cpp
+    src/libfovis/primesense_depth.cpp
+    src/libfovis/initial_homography_estimation.cpp
+    src/libfovis/grid_filter.cpp
+    src/libfovis/intensity_descriptor.cpp
+    src/libfovis/pyramid_level.cpp
+    src/libfovis/feature_matcher.cpp
+    src/libfovis/refine_feature_match.cpp
+    src/libfovis/stereo_depth.cpp
+    src/libfovis/stereo_frame.cpp
+    src/libfovis/depth_image.cpp
+    src/libfovis/rectification.cpp
+    src/libfovis/stereo_rectify.cpp
+    src/libfovis/internal_utils.cpp
+    src/libfovis/normalize_image.cpp)
 
-set_target_properties(libfovis PROPERTIES SOVERSION 1)
+set_target_properties(fovis PROPERTIES SOVERSION 1)
+
+install(TARGETS fovis
+    ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+    LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+    RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
+install(DIRECTORY include/${PROJECT_NAME}/
+    DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+    FILES_MATCHING PATTERN "*.h*"
+    PATTERN ".git" EXCLUDE
+)
