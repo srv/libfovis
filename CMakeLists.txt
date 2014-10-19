@@ -3,6 +3,7 @@ project(libfovis)
 
 find_package(catkin REQUIRED)
 
+set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 find_package(Eigen REQUIRED)
 include_directories(${EIGEN_INCLUDE_DIRS})
 add_definitions(${EIGEN_DEFINITIONS})
