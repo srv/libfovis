@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>libfovis</name>
-  <version>0.0.7</version>
+  <version>0.0.8</version>
   <description>
     Fast Odometry from VISion
   </description>
