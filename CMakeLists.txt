@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(libfovis)
 
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake/")
+
 find_package(catkin REQUIRED cmake_modules)
 
 find_package(Eigen REQUIRED)
@@ -12,7 +14,15 @@ catkin_package(
   LIBRARIES fovis
 )
 
-add_definitions(-Wall -msse2 -msse3)
+IF(SSE2_FOUND)
+    IF(SSSE3_FOUND)
+        add_definitions(-Wall -msse2 -msse3)
+    ELSE(SSSE3_FOUND)
+        add_definitions(-Wall -msse2)
+    ENDIF(SSSE3_FOUND)
+ELSE(SSE2_FOUND)
+    add_definitions(-Wall)
+ENDIF(SSE2_FOUND)
 
 include_directories(libfovis
   ${catkin_INCLUDE_DIRS}
