@@ -14,16 +14,15 @@ catkin_package(
   LIBRARIES fovis
 )
 
-# Do we want to use SSE?
-option(USE_SSE "Enables SSE support" ON)
-IF(SSE2_FOUND AND SSSE3_FOUND AND USE_SSE)
-    add_definitions(-Wall -msse2 -msse3)
-    set(USE_SSE_MESSAGE "Enabled")
-    add_definitions(-DFOVIS_USE_SSE)
-ELSE(SSE2_FOUND AND SSSE3_FOUND AND USE_SSE)
-    set(USE_SSE_MESSAGE "Disabled")
+IF(SSE2_FOUND)
+    IF(SSSE3_FOUND)
+        add_definitions(-Wall -msse2 -msse3)
+    ELSE(SSSE3_FOUND)
+        add_definitions(-Wall -msse2)
+    ENDIF(SSSE3_FOUND)
+ELSE(SSE2_FOUND)
     add_definitions(-Wall)
-ENDIF(SSE2_FOUND AND SSSE3_FOUND AND USE_SSE)
+ENDIF(SSE2_FOUND)
 
 include_directories(libfovis
   ${catkin_INCLUDE_DIRS}
