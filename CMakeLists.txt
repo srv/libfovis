@@ -24,33 +24,33 @@ ELSE(SSE2_FOUND)
     add_definitions(-Wall)
 ENDIF(SSE2_FOUND)
 
-include_directories(libfovis
+include_directories(.
   ${catkin_INCLUDE_DIRS}
 )
 
 add_library(fovis
-    libfovis/frame.cpp
-    libfovis/visual_odometry.cpp
-    libfovis/fast.cpp
-    libfovis/motion_estimation.cpp
-    libfovis/gauss_pyramid.c
-    libfovis/refine_motion_estimate.cpp
-    libfovis/tictoc.cpp
-    libfovis/primesense_depth.cpp
-    libfovis/initial_homography_estimation.cpp
-    libfovis/grid_filter.cpp
-    libfovis/intensity_descriptor.cpp
-    libfovis/pyramid_level.cpp
-    libfovis/feature_matcher.cpp
-    libfovis/refine_feature_match.cpp
-    libfovis/stereo_depth.cpp
-    libfovis/stereo_frame.cpp
-    libfovis/depth_image.cpp
-    libfovis/rectification.cpp
-    libfovis/stereo_rectify.cpp
-    libfovis/stereo_calibration.cpp
-    libfovis/internal_utils.cpp
-    libfovis/normalize_image.cpp)
+    libfovis/libfovis/frame.cpp
+    libfovis/libfovis/visual_odometry.cpp
+    libfovis/libfovis/fast.cpp
+    libfovis/libfovis/motion_estimation.cpp
+    libfovis/libfovis/gauss_pyramid.c
+    libfovis/libfovis/refine_motion_estimate.cpp
+    libfovis/libfovis/tictoc.cpp
+    libfovis/libfovis/primesense_depth.cpp
+    libfovis/libfovis/initial_homography_estimation.cpp
+    libfovis/libfovis/grid_filter.cpp
+    libfovis/libfovis/intensity_descriptor.cpp
+    libfovis/libfovis/pyramid_level.cpp
+    libfovis/libfovis/feature_matcher.cpp
+    libfovis/libfovis/refine_feature_match.cpp
+    libfovis/libfovis/stereo_depth.cpp
+    libfovis/libfovis/stereo_frame.cpp
+    libfovis/libfovis/depth_image.cpp
+    libfovis/libfovis/rectification.cpp
+    libfovis/libfovis/stereo_rectify.cpp
+    libfovis/libfovis/stereo_calibration.cpp
+    libfovis/libfovis/internal_utils.cpp
+    libfovis/libfovis/normalize_image.cpp)
 
 set_target_properties(fovis PROPERTIES SOVERSION 1)
 
